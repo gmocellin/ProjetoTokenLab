@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="projetoTokenLabApp">
+    <head>
+        <meta charset="UTF-8">
+        <title> Contatos Token Lab </title>
+        <link rel="stylesheet" type="text/css" href="css/all.css">
+        <script type="text/javascript" src="js/all.js"></script>
+
+        <base href="/">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                
+                <div class="navbar-header" ng-controller="menuCtrl">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" ng-if="localUser.user.id" href="/contacts_list/">Contatos Token Lab </a>
+                  <a class="navbar-brand" ng-if="!localUser.user.id" href="/login/">Contatos Token Lab </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a ng-href="/login/" ng-if="!localUser">Login</a></li>
+                        <li><a ng-href="/contacts_list/" ng-if="localUser">Contatos</a></li>
+                    </ul>
+                    
+                    <ul class="nav navbar-nav navbar-right" ng-controller="navCtrl" ng-if="localUser">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/edit_user/">Manage account</a></li>
+                                <li><a ng-click="logout()" href="#">Log Out</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-right" role="search" ng-if="localUser">
+                        <div class="form-group">
+                          <input type="text" class="form-control" ng-model="searchText" placeholder="Search">
+                        </div>
+                        <div class="btn btn-default"><a ng-href="/search/{{searchText}}" >Search</a></div>
+                    </form>
+                </div><!-- /.navbar-collapse --> 
+            </div>
+        </nav>
+
+        <main class="container">
+            <div class="row page-header">
+            </div>
+            <!-- Aqui vai a parte que muda em todos as páginas -->
+            <ng-view></ng-view>
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4> Contatos Tokenlab feito por Giovane Cunha Mocellin </h4>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

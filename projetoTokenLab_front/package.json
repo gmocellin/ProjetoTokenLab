@@ -1,0 +1,38 @@
+{
+  "name": "projetotokenlabfront",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-cookies": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angular-ui-notification": "^0.2.0",
+    "angular-ui-select": "^0.12.100",
+    "jquery": "^3.1.1",
+    "select2": "^4.0.3",
+    "simple-angular-server": "^0.3.12"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmocellin/ProjetoTokenLab.git"
+  },
+  "author": "gmocellin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gmocellin/ProjetoTokenLab/issues"
+  },
+  "homepage": "https://github.com/gmocellin/ProjetoTokenLab#readme"
+}

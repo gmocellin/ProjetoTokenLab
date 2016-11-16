@@ -59,30 +59,6 @@ module.exports = {
       return res.json(context);
   },
 
-// //******** Desnecessario
-//   search_user: function(req,res) {
-//     /* *
-//       Requisitos: Estar logado
-//       Paramêtros: user
-//       Saida: Usuário buscado
-
-//       Realiza uma busca nos usuário, pelo "user" passado como parâmetro e o retorna na saída
-//     */
-//     var context = {};
-//     context.status = "error";
-//       try {
-//         User.find({username: {contains: req.param("id")}}).exec(function(err, result){
-//           if(err) throw err;
-//           if(result){
-//             context.result = result;
-//             context.status = 'success';
-//             return res.json(context);
-//           } else
-//             return res.json(context);
-//         });
-//       } catch (err) {return res.json(context);}
-//   },
-
   update_user: function (req, res) {
     /* *
       Requisitos: Estar logado
