@@ -18,7 +18,7 @@ angular.module('projetoTokenLabApp')
         templateUrl: 'template/new_contact.html',
         controller: 'newContactCtrl'
     })
-    .when('/edit_contact/:id/', {
+    .when('/edit_contact/:id', {
         templateUrl: 'template/edit_contact.html',
         controller: 'editContactCtrl'
     })
@@ -30,7 +30,7 @@ angular.module('projetoTokenLabApp')
         templateUrl: 'template/edit_user.html',
         controller: 'editUserCtrl'
     })
-    .when('/edit_password/', {
+    .when('/change_password/', {
         templateUrl: 'template/edit_password.html',
         controller: 'editPasswordCtrl'
     })

@@ -9,6 +9,7 @@
     "angular-route": "^1.5.8",
     "angular-ui-notification": "^0.2.0",
     "angular-ui-select": "^0.12.100",
+    "bootstrap": "^3.3.7",
     "jquery": "^3.1.1",
     "select2": "^4.0.3",
     "simple-angular-server": "^0.3.12"

@@ -7,11 +7,10 @@ angular.module("projetoTokenLabApp").factory('Account', ['$http', function($http
 			return $http.get(urlpath("logout"));
 		},
 		update_user: function(data){
-			var formdata = data;
-			return $http.post(urlpath("user/update_user", formdata));
+			return $http.post(urlpath("user/update_user"), data);
 		},
 		update_user_password: function(data){
-			return $http.post(urlpath("user/update_user_password", data));
+			return $http.post(urlpath("user/update_user_password"), data);
 		},
 	};
 }]);

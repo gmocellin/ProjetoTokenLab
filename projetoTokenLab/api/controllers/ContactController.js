@@ -129,7 +129,7 @@ module.exports = {
     var context = {};
     context.status = 'error';
 
-    var data = (req.body.formdata) ? req.body.formdata : undefined;
+    var data = (req.body) ? req.body : undefined;
     if (data) {
       try {
         Contact.findOne({where: {id: data.id}}).exec(function(err, result){

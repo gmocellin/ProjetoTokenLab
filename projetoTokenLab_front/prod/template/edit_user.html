@@ -5,17 +5,18 @@
                 <div class="col-xs-12">
                     <h3>Edit User</h3>
                     <form>
+                        <div class="form-group" ng-class="{'has-error': formerror.name}">
+                            <label for="name"><h4>Name</h4></label>
+                            <input class="form-control" id="name" ng-model="formdata.name" type="text" required>
+                            <span class="help-block" ng-if="formerror.name">{{formerror.name}}</span>
+                        </div>
+                        
                         <div class="form-group" ng-class="{'has-error': formerror.username}">
                             <label for="username"><h4>Username</h4></label>
                             <input class="form-control" id="username"  ng-model="formdata.username" type="text" required>
                             <span class="help-block" ng-if="formerror.username">{{formerror.username}}</span>
                         </div>
                         
-                        <div class="form-group" ng-class="{'has-error': formerror.name}">
-                            <label for="name"><h4>Name</h4></label>
-                            <input class="form-control" id="name" ng-model="formdata.name" type="text" required>
-                            <span class="help-block" ng-if="formerror.name">{{formerror.name}}</span>
-                        </div>
                         <button type="submit" ng-click="edit_user()" class="btn btn-success">Edit</button>
                         <button type="submit" ng-click="change_password()" class="btn btn-default">Change Password</button>
                         <button type="submit" ng-click="delete_user()" class="btn btn-danger">Remove</button>

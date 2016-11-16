@@ -2,9 +2,9 @@
 angular.module('projetoTokenLabApp')
 .controller('editPasswordCtrl', function($scope, $location, Account, Notification){
     $scope.formdata = {}
-    $scope.update_password = function(){
+    $scope.update_user_password = function(){
         $scope.formerror = {};
-        Account.update_password({"formdata":$scope.formdata}).success(function(data){
+        Account.update_user_password({"formdata":$scope.formdata}).success(function(data){
             if (data.status == "success"){
                 Notification.success("Password changed");
                 $location.path("/contacts_list/");

@@ -72,13 +72,16 @@ module.exports = {
     var context = {};
     context.status = 'error';
 
-    var data = (req.body.formdata) ? req.body.formdata : undefined;
+    var data = (req.body) ? req.body : undefined;
     if (data) {
+      var newData = {};
+      newData.username = data.username;
+      newData.name = data.name;
       try {
         User.findOne(req.user.id).exec(function(err, result){
           if(err) throw err;
           if(result){
-            User.update({id: req.user.id}, data).exec(function (err, updated){
+            User.update({where: {id: req.user.id}}, newData).exec(function (err, updated){
               if(err) throw err;
               context.status = 'success';
               return res.json(context);

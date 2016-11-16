@@ -12,7 +12,6 @@ angular.module('projetoTokenLabApp')
                 Account.me().success(function (data) {
                     setLocalUser(data, $rootScope);
                 });
-                
                 $location.path("/contacts_list/");
             } else {
                 Notification.error("Username or password doesn't match");

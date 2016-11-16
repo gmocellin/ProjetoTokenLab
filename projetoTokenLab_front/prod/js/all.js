@@ -45985,7 +45985,7 @@ angular.module('ngCookies').provider('$$cookieWriter', function $$CookieWriterPr
 
 })(window, window.angular);
 
-angular.module('projetoTokenLabApp', [
+var app = angular.module('projetoTokenLabApp', [
     'ngRoute',
     'ui-notification',
     'ngCookies'
@@ -45995,6 +45995,7 @@ angular.module('projetoTokenLabApp', [
     Account.me().success(function(data){
         if (data.status == "success"){
             setLocalUser(data, $rootScope);
+            //$location.path("/contact_list/");
         } else {
             Notification.error("Please, authenticate yourself");
             $location.path("/login/");
@@ -46005,28 +46006,29 @@ angular.module('projetoTokenLabApp', [
     }); 
 }]);
 
-angular.module('projetoTokenLabApp')
-.controller('editContactCtrl', function($scope, $routeParams, $location, $rootScope, Notification, Contact){
-    
-    $scope.contact = {};
+angular.module('projetoTokenLabApp').controller('editContactCtrl', function($scope, $routeParams, $location, $rootScope, Notification, Contact){
+    $scope.formerror = {};
+    $scope.formdata = {};
     Contact.get_contact($routeParams.id).success(function(data){
-        $scope.contact = data;
+        $scope.formdata = data;
+        $scope.formdata.birthday = new Date($scope.formdata.birthday);
     }).catch(function(data){
-        Notification.error("Unable to load post");
+        Notification.error("Unable to load contact");
         $location.path("/contacts_list/");
     });
 
-    $scope.contacts_list = function(){
-        $scope.contact.user = $rootScope.localUser.user.id;
-        Contact.edit_contact({"formdata": $scope.formdata}).success(function(data){
+    $scope.edit_contact = function(){
+        $scope.formerror = {}
+        $scope.formdata.user = $rootScope.localUser.user.id;
+        Contact.update_contact({"formdata": $scope.formdata}).success(function(data){
             if(data.status=="error") {
-                Notification.error("Unable to edit post");
+                Notification.error("Unable to edit contact");
             } else {
                 Notification.success("Contact edited");
                 $location.path("/contacts_list/");
             }
         }).catch(function(data){
-            Notification.error("Unable to edit post");
+            Notification.error("Unable to edit contact");
         });
     }
 });
@@ -46034,9 +46036,9 @@ angular.module('projetoTokenLabApp')
 angular.module('projetoTokenLabApp')
 .controller('editPasswordCtrl', function($scope, $location, Account, Notification){
     $scope.formdata = {}
-    $scope.update_password = function(){
+    $scope.update_user_password = function(){
         $scope.formerror = {};
-        Account.update_password({"formdata":$scope.formdata}).success(function(data){
+        Account.update_user_password({"formdata":$scope.formdata}).success(function(data){
             if (data.status == "success"){
                 Notification.success("Password changed");
                 $location.path("/contacts_list/");
@@ -46052,14 +46054,12 @@ angular.module('projetoTokenLabApp')
         });
     }
 });
-angular.module('projetoTokenLabApp')
-.controller('editUserCtrl', function($scope, $location, Users, Account, Notification){
+angular.module('projetoTokenLabApp').controller('editUserCtrl', function($scope, $location, Users, Account, Notification){
     $scope.formerror = {};
     $scope.formdata = {};
     Account.me().success(function(data){
         if(data.status=='success'){
             $scope.formdata = data.user;
-            $scope.formdata.birthday_date = new Date($scope.formdata.birthday);
         } else {
             Notification.error("Unable to locate profile");
         }
@@ -46067,15 +46067,16 @@ angular.module('projetoTokenLabApp')
         Notification.error("Unable to locate profile");
     });
 
-    $scope.editUser = function(){
+    $scope.edit_user = function(){
         $scope.formerror = {};
         if($.trim($scope.formdata.username).length == 0){
             $scope.formerror.username = "You can't use only white spaces.";
         } else {
-            Account.update_user($scope.formdata, $scope.f_photo).success(function(data){
+            console.log($scope.formdata);
+            Account.update_user($scope.formdata).success(function(data){
                 if (data.status == "success"){
                     Notification.success("User updated");
-                    $location.path("/timeline/");
+                    $location.path("/contacts_list/");
                 } else {
                     Notification.error("Couldn't edit user");
                 }
@@ -46085,12 +46086,12 @@ angular.module('projetoTokenLabApp')
         }
     };
       
-    $scope.changePassword = function(){
-        $location.path('/editPassword/');
+    $scope.change_password = function(){
+        $location.path('/change_password/');
     };
 
-    $scope.deleteUser = function(){
-        Users.delete().success(function(data){
+    $scope.delete_user = function(){
+        Users.delete_user().success(function(data){
             if (data.status=="success"){
                 Notification.success("User deleted");
                 $location.path('/login/');
@@ -46111,15 +46112,27 @@ angular.module('projetoTokenLabApp')
 });
 //Controller da lista de contatos
 angular.module('projetoTokenLabApp')
-.controller('contactsCtrl', function($scope, $location, Post, Notification){
+.controller('contactsCtrl', function($scope, $location, Notification, Contact){
     $scope.contacts = [];
     Contact.my_contacts().success(function(data){
         if (data.status == "error"){
-            Notification.error("Unable to load timeline");
+            Notification.error("Unable to load contacts");
         } else {
             $scope.contacts = data.result;
         }
     });
+    $scope.add_contact = function(){
+        $location.path('/new_contact/');
+    };
+
+    /*$scope.edit_contact = function(){
+        $location.path('/edit_contact/');
+    };*/
+
+    $scope.delete_contact = function(){
+        Contact.delete_contact();
+    };
+
 });
 
 //Controller do login
@@ -46136,7 +46149,6 @@ angular.module('projetoTokenLabApp')
                 Account.me().success(function (data) {
                     setLocalUser(data, $rootScope);
                 });
-                
                 $location.path("/contacts_list/");
             } else {
                 Notification.error("Username or password doesn't match");
@@ -46148,8 +46160,8 @@ angular.module('projetoTokenLabApp')
 });
 //Controller do menu
 angular.module('projetoTokenLabApp')
-.controller('menuCtrl', function($scope){
-
+.controller('menuCtrl', function($scope, $location){
+    $location.path("/login/");
 });
 
 //Controler do menu de usuario
@@ -46167,24 +46179,25 @@ angular.module('projetoTokenLabApp')
 });
 //Controller de Adicionar Contato 
 angular.module('projetoTokenLabApp')
-.controller('newContactCtrl', function($scope, $routeParams){
+.controller('newContactCtrl', function($scope, $location, Contact, Notification){
     $scope.formdata = {}; 
     $scope.add_contact = function(){
         Contact.new_contact({"formdata": $scope.formdata}).success(function(data){
             if(data.status=="error") {
-                Notification.error("Unable to create post");
+                Notification.error("Unable to create contact");
             } else {
                 Notification.success("Contact created");
                 $location.path("/contacts_list/");
             }
         }).catch(function(data){
-            Notification.error("Unable to create post");
+            Notification.error("Unable to create contact");
         });
     }
 });
 //Controller de buscar contato
+//Não funciona ainda
 angular.module('projetoTokenLabApp')
-.controller('searchContactCtrl', function($scope, $routeParams, $location, Notification, Contacts){
+.controller('searchContactCtrl', function($scope, $routeParams, $location, Notification, Contact){
    
     $scope.contacts = [];
     errors = 0;
@@ -46196,14 +46209,14 @@ angular.module('projetoTokenLabApp')
             $scope.contacts = data.result;
             $location.path("/search_result/");
         } else {
-            Notification("Unable to search Posts");
+            Notification("Unable to search contacts");
             errors += 1;
             if (errors == 2){
                 $location.path("/contacts_list/");
             }
         }
     }).catch(function(data){
-        Notification("Unable to search Posts");
+        Notification("Unable to search contacts");
         errors += 1;
         if (errors == 2){
             $location.path("/contacts_list/");
@@ -46251,7 +46264,7 @@ angular.module('projetoTokenLabApp')
         templateUrl: 'template/new_contact.html',
         controller: 'newContactCtrl'
     })
-    .when('/edit_contact/:id/', {
+    .when('/edit_contact/:id', {
         templateUrl: 'template/edit_contact.html',
         controller: 'editContactCtrl'
     })
@@ -46263,7 +46276,7 @@ angular.module('projetoTokenLabApp')
         templateUrl: 'template/edit_user.html',
         controller: 'editUserCtrl'
     })
-    .when('/edit_password/', {
+    .when('/change_password/', {
         templateUrl: 'template/edit_password.html',
         controller: 'editPasswordCtrl'
     })
@@ -46287,11 +46300,10 @@ angular.module("projetoTokenLabApp").factory('Account', ['$http', function($http
 			return $http.get(urlpath("logout"));
 		},
 		update_user: function(data){
-			var formdata = data;
-			return $http.post(urlpath("user/update_user", formdata));
+			return $http.post(urlpath("user/update_user"), data);
 		},
 		update_user_password: function(data){
-			return $http.post(urlpath("user/update_user_password", data));
+			return $http.post(urlpath("user/update_user_password"), data);
 		},
 	};
 }]);
@@ -46310,15 +46322,15 @@ angular.module("projetoTokenLabApp")
         },
         new_contact: function(formdata){
             data = {formdata: formdata};
-            data.formdata.birthday = data.formdata.birthday_date.toISOString().slice(0, 10);
+            data.formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
 
             return $http.post(urlpath("contact/new_contact"), data);
         },
-        update_contact: function(formdata){
-            data = {formdata: formdata};
-            data.formdata.birthday = data.formdata.birthday_date.toISOString().slice(0, 10);
+        update_contact: function(data){
+            var formdata = data;
+            formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
 
-            return $http.post(urlpath("contact/update_contact"), data);
+            return $http.post(urlpath("contact/update_contact"), formdata);
         },
         my_contacts: function(){
             return $http.post(urlpath("contact/my_contacts"));

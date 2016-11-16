@@ -9,8 +9,7 @@ module.exports = function(grunt) {
         concat: {
             css: {
                 src: [
-                    //'bootstrap-3.3.7-dist/css/bootstrap.css',
-                    //'bootstrap-3.3.7-dist/css/bootstrap.css.map',
+                    'node_modules/bootstrap/dist/css/**/*.css',
                     'node_modules/angular-ui-notification/dist/angular-ui-notification.css',
                     'css/**/*.css'
                     ],
@@ -20,7 +19,8 @@ module.exports = function(grunt) {
                 src: [
                     'node_modules/angular/angular.js',
                     'node_modules/jquery/dist/jquery.js',
-                    'bootstrap-sass-3.3.7/assets/javascripts/bootstrap.js',
+                    'node_modules/bootstrap/dist/js/bootstrap.js',
+                    'node_modules/bootstrap/dist/js/bootstrap.js',
                     'node_modules/angular-route/angular-route.js',
                     'node_modules/angular-ui-notification/dist/angular-ui-notification.js',
                     'node_modules/angular-cookies/angular-cookies.js',
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
                     },
                     {
                         expand:true,
-                        src: ['bootstrap-sass-3.3.7/assets/fonts/**/*'],
+                        src: ['node_modules/bootstrap/dist/fonts/**/*'],
                         dest: 'prod/'
                     }
                 ]

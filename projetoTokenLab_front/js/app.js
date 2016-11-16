@@ -1,4 +1,4 @@
-angular.module('projetoTokenLabApp', [
+var app = angular.module('projetoTokenLabApp', [
     'ngRoute',
     'ui-notification',
     'ngCookies'
@@ -8,6 +8,7 @@ angular.module('projetoTokenLabApp', [
     Account.me().success(function(data){
         if (data.status == "success"){
             setLocalUser(data, $rootScope);
+            //$location.path("/contact_list/");
         } else {
             Notification.error("Please, authenticate yourself");
             $location.path("/login/");
