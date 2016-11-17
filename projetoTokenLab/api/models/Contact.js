@@ -25,22 +25,22 @@ module.exports = {
 
     birthday : {
       type: 'date',
-      required: true
+      required: false
     },
 
     mail : {
       type: 'string',
-      required: true
+      required: false
     },
 
     address : {
       type: 'string',
-      required: true
+      required: false
     },
 
     phone : {
       type: 'string',
-      required: true
+      required: false
     }
   },
 };

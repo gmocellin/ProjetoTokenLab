@@ -14,7 +14,7 @@ var app = angular.module('projetoTokenLabApp', [
             $location.path("/login/");
         }
     }).catch(function(data){
-        Notification.error("Please, authenticate yourself");
+        //Notification.error("Please, authenticate yourself");
         $location.path("/login/");
     }); 
 }]);

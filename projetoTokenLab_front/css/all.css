@@ -35,6 +35,10 @@
   opacity: 1;
 }
 
+.panel-footer{
+  height: 55px;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -53,4 +57,8 @@ main {
   .container {
     width: 90%;
   }
+}
+
+.logo{
+  height: 39px;
 }

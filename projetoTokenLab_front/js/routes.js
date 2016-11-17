@@ -3,8 +3,8 @@ angular.module('projetoTokenLabApp')
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $routeProvider
     .when('/',{
-          templateUrl: 'index.html',
-          controller: 'indexCtrl'
+        templateUrl: 'index.html',
+        controller: 'indexCtrl'
     })
     .when('/login/', {
         templateUrl: 'template/login.html',
@@ -34,8 +34,8 @@ angular.module('projetoTokenLabApp')
         templateUrl: 'template/edit_password.html',
         controller: 'editPasswordCtrl'
     })
-    .when('/search/:text', {
-        templateUrl: 'template/search_result.html',
+    .when('/search_contact/:searchText', {
+        templateUrl: 'template/contacts_list.html',
         controller: 'searchContactCtrl'
     })
     .otherwise({

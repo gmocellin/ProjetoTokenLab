@@ -1,4 +1,5 @@
-angular.module('projetoTokenLabApp').controller('editUserCtrl', function($scope, $location, Users, Account, Notification){
+angular.module('projetoTokenLabApp')
+.controller('editUserCtrl', function($scope, $rootScope, $location, Users, Account, Notification){
     $scope.formerror = {};
     $scope.formdata = {};
     Account.me().success(function(data){
@@ -35,10 +36,13 @@ angular.module('projetoTokenLabApp').controller('editUserCtrl', function($scope,
     };
 
     $scope.delete_user = function(){
+        $("#delete-modal").modal('hide');
         Users.delete_user().success(function(data){
             if (data.status=="success"){
                 Notification.success("User deleted");
-                $location.path('/login/');
+                //console.log($rootScope);
+                //logout();
+                $location.path('/index/');
             } else {
                 Notification.error("Unable to delete");
             }

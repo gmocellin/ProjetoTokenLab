@@ -4,8 +4,8 @@ angular.module("projetoTokenLabApp")
         get_contact: function(id){
             return $http.get(urlpath("contact/"+id));
         },
-        new_contact: function(formdata){
-            data = {formdata: formdata};
+        new_contact: function(data){
+            var formdata = data;
             data.formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
 
             return $http.post(urlpath("contact/new_contact"), data);
@@ -22,12 +22,11 @@ angular.module("projetoTokenLabApp")
         all_contact: function(){
             return $http.get(urlpath("contact"));
         },
-        delete_contact: function(){
+        delete_contact: function(data){
             return $http.post(urlpath("contact/delete_contact"), data);
         },
-        //************TESTAR
-        search_contact: function(name){
-            return $http.get(urlpath("contact/search_user/"+name));
+        search_contact: function(data){
+            return $http.post(urlpath("contact/search_contact/"), data);
         }
     };
 }]);

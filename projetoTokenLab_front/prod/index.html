@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <title> Contatos Token Lab </title>
-        <link rel="stylesheet" type="text/css" href="css/all.css">
-        <script type="text/javascript" src="js/all.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/all.css">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <script type="text/javascript" src="/js/all.js"></script>
 
         <base href="/">
     </head>
@@ -20,7 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" ng-if="localUser.user.id" href="/contacts_list/">Contatos Token Lab </a>
+                  <a class="navbar-brand" ng-if="localUser.user.id" href="/contacts_list/"></img>Contatos Token Lab </a>
                   <a class="navbar-brand" ng-if="!localUser.user.id" href="/login/">Contatos Token Lab </a>
                 </div>
 
@@ -46,7 +47,7 @@
                         <div class="form-group">
                           <input type="text" class="form-control" ng-model="searchText" placeholder="Search">
                         </div>
-                        <div class="btn btn-default"><a ng-href="/search/{{searchText}}" >Search</a></div>
+                        <div class="btn btn-default"><a ng-href="/search_contact/{{searchText}}">Search</a></div>
                     </form>
                 </div><!-- /.navbar-collapse --> 
             </div>
@@ -61,7 +62,10 @@
         <footer class="footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-xs-1">
+                        <img src="images/tl-icon.png" class="logo">
+                    </div>
+                    <div class="col-xs-11">
                         <h4> Contatos Tokenlab feito por Giovane Cunha Mocellin </h4>
                     </div>
                 </div>

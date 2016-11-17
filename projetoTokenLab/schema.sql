@@ -1,4 +1,4 @@
---
+---
 -- PostgreSQL database dump
 --
 
@@ -212,6 +212,8 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
+
+
 
 -- ***********FK de contact para user
 ALTER TABLE contact ADD CONSTRAINT contact_user_fkey FOREIGN KEY ("user") REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE;

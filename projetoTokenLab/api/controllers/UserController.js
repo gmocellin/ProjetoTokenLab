@@ -46,10 +46,15 @@ module.exports = {
     var data = (req.body) ? req.body : undefined;
     if (data) {
       try {
-        User.create(data).exec(function createCB(err, created){
+        User.find({where: {username: data.username}}).exec(function(err, result){
           if(err) throw err;
-          context.status = 'success';
-          return res.json(context);
+          if(result){
+            User.create(data).exec(function createCB(err, created){
+              if(err) throw err;
+              context.status = 'success';
+              return res.json(context);
+            });
+          }
         });
       } catch (err) {
         return res.json(context);
@@ -154,11 +159,12 @@ module.exports = {
     if (data) {
       try {
         data.user = req.user.id;
+        
         req.logout();
         User.destroy({where: {id: data.user}}).exec(function(err){
           if(err) throw err;
           context.status = 'success';
-          return res.redirect('/');
+          return res.json(context);
         });
       } catch (err) {return res.json(context);}
     } else return res.json(context);

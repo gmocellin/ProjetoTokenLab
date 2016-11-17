@@ -1,28 +1,52 @@
-<div class= "col-sm-12 col-lg-10">
+<div class= "container">
     <div class = "row">
-        <div class="col-sm-12 col-lg-12">
-            <div class="row">
-                <div class="col-xs-12">
-                    <h3>Edit User</h3>
-                    <form>
-                        <div class="form-group" ng-class="{'has-error': formerror.name}">
-                            <label for="name"><h4>Name</h4></label>
-                            <input class="form-control" id="name" ng-model="formdata.name" type="text" required>
-                            <span class="help-block" ng-if="formerror.name">{{formerror.name}}</span>
-                        </div>
-                        
-                        <div class="form-group" ng-class="{'has-error': formerror.username}">
-                            <label for="username"><h4>Username</h4></label>
-                            <input class="form-control" id="username"  ng-model="formdata.username" type="text" required>
-                            <span class="help-block" ng-if="formerror.username">{{formerror.username}}</span>
-                        </div>
-                        
-                        <button type="submit" ng-click="edit_user()" class="btn btn-success">Edit</button>
-                        <button type="submit" ng-click="change_password()" class="btn btn-default">Change Password</button>
-                        <button type="submit" ng-click="delete_user()" class="btn btn-danger">Remove</button>
-                    </form>
+        <div class="col-xs-12">
+            <h3>Edit User</h3>
+            <form>
+                <div class="form-group" ng-class="{'has-error': formerror.name}">
+                    <label for="name"><h4>Name</h4></label>
+                    <input class="form-control" id="name" ng-model="formdata.name" type="text" required>
+                    <span class="help-block" ng-if="formerror.name">{{formerror.name}}</span>
                 </div>
-            </div>
+                
+                <div class="form-group" ng-class="{'has-error': formerror.username}">
+                    <label for="username"><h4>Username</h4></label>
+                    <input class="form-control" id="username"  ng-model="formdata.username" type="text" required>
+                    <span class="help-block" ng-if="formerror.username">{{formerror.username}}</span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1">
+                        <button type="submit" ng-click="edit_user()" class="btn btn-success">Edit</button>
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="submit" ng-click="change_password()" class="btn btn-default">Change Password</button>
+                    </div>
+                    <!--<div class="col-xs-2">
+                        <div class="form-group">
+                            <button class="form-control btn btn-danger" data-toggle="modal" data-target="#delete-modal">Delete</button>
+                        </div>
+                    </div>
+                    <div id="delete-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p>Do you really want to delete <b>{{formerror.name}}</b>?</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button class="form-control btn btn-danger" ng-click="delete_user()">Delete</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button class="form-control btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </form>
         </div>
     </div>
 </div>

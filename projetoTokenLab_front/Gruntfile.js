@@ -37,7 +37,7 @@ module.exports = function(grunt) {
                     {
                         expand:true,
                         src: ['images/**'],
-                        dest: 'prod/image/'
+                        dest: 'prod/'
                     },
                     {
                         expand:true,
@@ -51,7 +51,8 @@ module.exports = function(grunt) {
                     },
                     {
                         expand:true,
-                        src: ['node_modules/bootstrap/dist/fonts/**/*'],
+                        cwd: 'node_modules/bootstrap/dist/',
+                        src: ['fonts/**/*'],
                         dest: 'prod/'
                     }
                 ]

@@ -46001,7 +46001,7 @@ var app = angular.module('projetoTokenLabApp', [
             $location.path("/login/");
         }
     }).catch(function(data){
-        Notification.error("Please, authenticate yourself");
+        //Notification.error("Please, authenticate yourself");
         $location.path("/login/");
     }); 
 }]);
@@ -46054,7 +46054,8 @@ angular.module('projetoTokenLabApp')
         });
     }
 });
-angular.module('projetoTokenLabApp').controller('editUserCtrl', function($scope, $location, Users, Account, Notification){
+angular.module('projetoTokenLabApp')
+.controller('editUserCtrl', function($scope, $rootScope, $location, Users, Account, Notification){
     $scope.formerror = {};
     $scope.formdata = {};
     Account.me().success(function(data){
@@ -46091,10 +46092,13 @@ angular.module('projetoTokenLabApp').controller('editUserCtrl', function($scope,
     };
 
     $scope.delete_user = function(){
+        $("#delete-modal").modal('hide');
         Users.delete_user().success(function(data){
             if (data.status=="success"){
                 Notification.success("User deleted");
-                $location.path('/login/');
+                //console.log($rootScope);
+                //logout();
+                $location.path('/index/');
             } else {
                 Notification.error("Unable to delete");
             }
@@ -46112,7 +46116,7 @@ angular.module('projetoTokenLabApp')
 });
 //Controller da lista de contatos
 angular.module('projetoTokenLabApp')
-.controller('contactsCtrl', function($scope, $location, Notification, Contact){
+.controller('contactsCtrl', function($scope, $route, $location, Notification, Contact){
     $scope.contacts = [];
     Contact.my_contacts().success(function(data){
         if (data.status == "error"){
@@ -46129,10 +46133,22 @@ angular.module('projetoTokenLabApp')
         $location.path('/edit_contact/');
     };*/
 
-    $scope.delete_contact = function(){
-        Contact.delete_contact();
-    };
+    $scope.delete_contact = function(id){
+        $("#delete-modal-"+id).modal('hide');
+        data = {};
+        data.id = id;
+        Contact.delete_contact(data).success(function(data){
+            if(data.status=="success"){
+                Notification.success("Contact deleted");
+                $route.reload();
+            } else {
+                Notification.error("Unable to delete");
+            }
+        }).catch(function(data){
+            Notification.error("Unable to delete");
+        });
 
+    };
 });
 
 //Controller do login
@@ -46143,6 +46159,7 @@ angular.module('projetoTokenLabApp')
             username : $scope.username,
             password : $scope.password
         };
+        console.log(formdata);
         Auth.login(formdata).success(function(data){
             if (data.user){
                 Notification.success("Login successfully!");
@@ -46200,27 +46217,22 @@ angular.module('projetoTokenLabApp')
 .controller('searchContactCtrl', function($scope, $routeParams, $location, Notification, Contact){
    
     $scope.contacts = [];
-    errors = 0;
-    $scope.searchText = "";
-    $scope.text = $routeParams.text; 
+    //$scope.searchText = "";
+    var data = {}
+    data.name = $routeParams.searchText;
+    console.log(data);
     
-    Contact.search_contact($routeParams.text).success(function(data){
+    Contact.search_contact(data).success(function(data){
         if(data.status=="success"){
             $scope.contacts = data.result;
-            $location.path("/search_result/");
+            //$location.path("/search_contact/");
         } else {
             Notification("Unable to search contacts");
-            errors += 1;
-            if (errors == 2){
-                $location.path("/contacts_list/");
-            }
+            //$location.path("/contacts_list/");
         }
     }).catch(function(data){
         Notification("Unable to search contacts");
-        errors += 1;
-        if (errors == 2){
-            $location.path("/contacts_list/");
-        }
+        //$location.path("/contacts_list/");
     });
 });
 
@@ -46249,8 +46261,8 @@ angular.module('projetoTokenLabApp')
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $routeProvider
     .when('/',{
-          templateUrl: 'index.html',
-          controller: 'indexCtrl'
+        templateUrl: 'index.html',
+        controller: 'indexCtrl'
     })
     .when('/login/', {
         templateUrl: 'template/login.html',
@@ -46280,8 +46292,8 @@ angular.module('projetoTokenLabApp')
         templateUrl: 'template/edit_password.html',
         controller: 'editPasswordCtrl'
     })
-    .when('/search/:text', {
-        templateUrl: 'template/search_result.html',
+    .when('/search_contact/:searchText', {
+        templateUrl: 'template/contacts_list.html',
         controller: 'searchContactCtrl'
     })
     .otherwise({
@@ -46320,8 +46332,8 @@ angular.module("projetoTokenLabApp")
         get_contact: function(id){
             return $http.get(urlpath("contact/"+id));
         },
-        new_contact: function(formdata){
-            data = {formdata: formdata};
+        new_contact: function(data){
+            var formdata = data;
             data.formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
 
             return $http.post(urlpath("contact/new_contact"), data);
@@ -46338,12 +46350,11 @@ angular.module("projetoTokenLabApp")
         all_contact: function(){
             return $http.get(urlpath("contact"));
         },
-        delete_contact: function(){
+        delete_contact: function(data){
             return $http.post(urlpath("contact/delete_contact"), data);
         },
-        //************TESTAR
-        search_contact: function(name){
-            return $http.get(urlpath("contact/search_user/"+name));
+        search_contact: function(data){
+            return $http.post(urlpath("contact/search_contact/"), data);
         }
     };
 }]);
