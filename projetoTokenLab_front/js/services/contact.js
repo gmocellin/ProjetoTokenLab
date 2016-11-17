@@ -6,13 +6,17 @@ angular.module("projetoTokenLabApp")
         },
         new_contact: function(data){
             var formdata = data;
-            data.formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            if(data.formdata.birthday != null){
+                data.formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            }
 
             return $http.post(urlpath("contact/new_contact"), data);
         },
         update_contact: function(data){
             var formdata = data;
-            formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            if(data.formdata.birthday != null){
+                formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            }
 
             return $http.post(urlpath("contact/update_contact"), formdata);
         },

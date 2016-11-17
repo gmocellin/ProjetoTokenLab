@@ -46,14 +46,17 @@ module.exports = {
     var data = (req.body) ? req.body : undefined;
     if (data) {
       try {
-        User.find({where: {username: data.username}}).exec(function(err, result){
+        User.find({username: data.username}).exec(function(err, result){
           if(err) throw err;
-          if(result){
+          if(!result[0]){
             User.create(data).exec(function createCB(err, created){
               if(err) throw err;
               context.status = 'success';
               return res.json(context);
             });
+          } else {
+            context.status = 'error'
+            return res.json(context);
           }
         });
       } catch (err) {
@@ -122,16 +125,39 @@ module.exports = {
         User.findOne(req.user.id).exec(function(err, result){
           if(err) throw err;
           if(result){
-            if (result.password == data.password){
-              User.update({id: req.user.id}, newData).exec(function (err, updated){
-                if(err) throw err;
-                context.status = 'success';
+            bcrypt.compare(data.password, result.password, function (err, resp) {
+              if (!resp){
+                context.status = 'notpassword';
                 return res.json(context);
-              });
-            } else {
-              context.status = 'notpassword';
-              return res.json(context);
-            }
+              }else{
+                bcrypt.genSalt(72938173650192837461029381029383, function(err, salt) {
+                  bcrypt.hash(newData.password, salt, function(err, hash) {
+                    if (err) {
+                      console.log(err);
+                      throw err;
+                    } else {
+                      newData.password = hash;
+                      User.update({id: req.user.id}, newData).exec(function (err, updated){
+                        if(err) throw err;
+                        context.status = 'success';
+                        return res.json(context);
+                      });
+                      //cb();
+                    }
+                  });
+                });
+              }
+            });
+            // if (result.password == data.password){
+            //   User.update({id: req.user.id}, newData).exec(function (err, updated){
+            //     if(err) throw err;
+            //     context.status = 'success';
+            //     return res.json(context);
+            //   });
+            // } else {
+            //   context.status = 'notpassword';
+            //   return res.json(context);
+            // }
           } 
           else
             return res.json(context);

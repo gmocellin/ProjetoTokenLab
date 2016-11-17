@@ -4,7 +4,7 @@ var app = angular.module('projetoTokenLabApp', [
     'ngCookies'
 ]).config(['$httpProvider',function($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
-}]).run(['$rootScope', 'Account', '$location', 'Notification', function($rootScope, Account, $location, Notification){
+}]).run(['$rootScope', 'Account', '$location', 'Notification', function( $rootScope, Account, $location, Notification){
     Account.me().success(function(data){
         if (data.status == "success"){
             setLocalUser(data, $rootScope);

@@ -24,10 +24,14 @@
                             <p><h5>Birthday:</h5></p>
                         </div>
                         <div class="col-xs-10">
-                            <p><h5>{{contact.mail}}</h5></p>
-                            <p><h5>{{contact.address}}</h5></p>
-                            <p><h5>{{contact.phone}}</h5></p>
-                            <p><h5>{{contact.birthday | date : "dd/MMM/yyyy"}}</h5></p>
+                            <span ng-if="contact.mail != null || contact.mail != ''"><h5>{{contact.mail}}</h5></span>
+                            <span ng-if="contact.mail == null || contact.mail == ''"><h5>-</h5></span>
+                            <span ng-if="contact.address != null || contact.address != ''"><h5>{{contact.address}}</h5></span>
+                            <span ng-if="contact.address == null || contact.address == ''"><h5>-</h5></span>
+                            <span ng-if="contact.phone != null || contact.phone != ''"><h5>{{contact.phone}}</h5></span>
+                            <span ng-if="contact.phone == null || contact.phone == ''"><h5>-</h5></span>
+                            <span ng-if="contact.birthday != null || contact.birthday != ''"><h5>{{contact.birthday | date : "dd/MMM/yyyy"}}</h5></span>
+                            <span ng-if="contact.birthday == null || contact.birthday == ''"><h5>-</h5></span>
                         </div>
                     </div>
                 </div>

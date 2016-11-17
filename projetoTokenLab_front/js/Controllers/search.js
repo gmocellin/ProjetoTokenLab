@@ -7,7 +7,6 @@ angular.module('projetoTokenLabApp')
     //$scope.searchText = "";
     var data = {}
     data.name = $routeParams.searchText;
-    console.log(data);
     
     Contact.search_contact(data).success(function(data){
         if(data.status=="success"){

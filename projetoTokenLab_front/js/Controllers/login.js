@@ -6,7 +6,6 @@ angular.module('projetoTokenLabApp')
             username : $scope.username,
             password : $scope.password
         };
-        console.log(formdata);
         Auth.login(formdata).success(function(data){
             if (data.user){
                 Notification.success("Login successfully!");

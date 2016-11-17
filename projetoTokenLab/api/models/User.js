@@ -31,20 +31,27 @@ module.exports = {
       collection: 'contact',
       via: 'user'
     },
+    toJSON: function() {
+        var obj = this.toObject();
+        delete obj.password;
+        return obj;
+    }
 
   },
 
-  // beforeCreate: function(user, cb) {
-  //   bcrypt.genSalt(10, function(err, salt) {
-  //     bcrypt.hash(user.password, salt, function(err, hash) {
-  //       if (err) cb(err);
-  //       else {
-  //         user.password = hash;
-  //         cb();
-  //       }
-  //     });
-  //   });
-  // }
+  beforeCreate: function(user, cb) {
+      bcrypt.genSalt(72938173650192837461029381029383, function(err, salt) {
+          bcrypt.hash(user.password, salt, function(err, hash) {
+              if (err) {
+                  console.log(err);
+                  cb(err);
+              } else {
+                  user.password = hash;
+                  cb();
+              }
+          });
+      });
+  }
 
 };
 

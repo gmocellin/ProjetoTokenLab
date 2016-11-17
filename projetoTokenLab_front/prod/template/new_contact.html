@@ -14,29 +14,30 @@
                             </div>
                             <div class="form-group">
                                 <label for="NewMail"><h4>Mail</h4></label>
-                                <input type="email" name="email" class="form-control" id="NewMail" placeholder="email@email.com" ng-model="formdata.mail" required></input>
+                                <input type="email" name="email" class="form-control" id="NewMail" placeholder="email@email.com" ng-model="formdata.mail"></input>
                                 <span style="color:red" ng-show="contactForm.email.$invalid">
                                     <span ng-show="contactForm.email.$error.email">Invalid email address.</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label for="NewAddress"><h4>Address</h4></label>
-                                <input class="form-control" id="NewAddress" placeholder="Address" ng-model="formdata.address" required></input>
+                                <input class="form-control" id="NewAddress" placeholder="Address" ng-model="formdata.address"></input>
                             </div>
                             <div class="form-group">
                                 <label for="NewPhone"><h4>Phone</h4></label>
-                                <input class="form-control" id="NewPhone" placeholder="(xx) xxxx-xxxx" ng-model="formdata.phone" required></input>
+                                <input class="form-control" id="NewPhone" placeholder="(xx) xxxx-xxxx" ng-model="formdata.phone"></input>
                             </div>
                             <div class="form-group">
                                 <label for="NewBirthday"><h4>Birthday</h4></label>
-                                <input name="date" type="date" class="form-control" id="NewBirthday" ng-model="formdata.birthday" required></input>
+                                <input name="date" type="date" class="form-control" id="NewBirthday" ng-model="formdata.birthday"></input>
                                 <span style="color:red" ng-show="contactForm.date.$invalid">
                                     <span ng-show="contactForm.date.$error.date">Invalid date.</span>
                                 </span>
                             </div>
                             <input type="submit" class="btn btn-default" ng-disabled="
                             contactForm.name.$error.required || 
-                            contactForm.email.$error.email" 
+                            contactForm.email.$error.email || 
+                            contactForm.date.$error.date" 
                             ng-click="add_contact()" value="Create Contact"></input>
                         </form>
                     </div>

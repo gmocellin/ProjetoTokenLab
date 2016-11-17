@@ -17,7 +17,6 @@ angular.module('projetoTokenLabApp')
         if($.trim($scope.formdata.username).length == 0){
             $scope.formerror.username = "You can't use only white spaces.";
         } else {
-            console.log($scope.formdata);
             Account.update_user($scope.formdata).success(function(data){
                 if (data.status == "success"){
                     Notification.success("User updated");

@@ -22,7 +22,9 @@ module.exports = {
     if (data) {
       try {
         data.user = req.user;
-        data.birthday = new Date(data.birthday);
+        if(data.birthday != null){
+          data.birthday = new Date(data.birthday);
+        }
 
         Contact.create(data).exec(function createCB(err, created){
           if(err) throw err;

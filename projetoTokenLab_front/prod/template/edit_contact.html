@@ -3,39 +3,46 @@
         <div class="col-sm-12 col-lg-12">
             <div class="row">
                 <div class="col-xs-12">
-                    <form>
+                    <form name="editContactForm">
                         <div class="form-group" ng-class="{'has-error': formerror.name}">
                             <label for="NewContact"><h4>Name</h4></label>
-                            <input class="form-control" id="NewContact" ng-model="formdata.name" type="text" required>
+                            <input name="name" class="form-control" id="NewContact" ng-model="formdata.name" type="text" required>
                             <span class="help-block" ng-if="formerror.name">{{formerror.name}}</span>
+                            <span style="color:red" ng-show="editContactForm.name.$invalid">
+                                <span ng-show="editContactForm.name.$error.required">Name is required.</span>
+                            </span>
                         </div>
                         <div class="form-group" ng-class="{'has-error': formerror.mail}">
                             <label for="NewMail"><h4>Mail</h4></label>
-                            <input class="form-control" id="NewMail" ng-model="formdata.mail" required></input>
-                            <span class="help-block" ng-if="formerror.mail">{{formerror.mail}}</span>
-                            <div role="alert">
-                              <span class="error" ng-show="myForm.input.$error.required">
-                                Required!</span>
-                              <span class="error" ng-show="myForm.input.$error.email">
-                                Not valid email!</span>
-                            </div>
+                            <input type="mail" name="mail" class="form-control" id="NewMail" placeholder="email@email.com" ng-model="formdata.mail" ></input>
+                            <span class="help-block" ng-if="formerror.mail != null">{{formerror.mail}}</span>
+                            <span style="color:red" ng-show="editContactForm.email.$invalid">
+                                <span ng-show="editContactForm.email.$error.email">Invalid email address.</span>
+                            </span>
                         </div>
                         <div class="form-group" ng-class="{'has-error': formerror.Address}">
                             <label for="NewAddress"><h4>Address</h4></label>
-                            <input class="form-control" id="NewAddress" ng-model="formdata.address" required></input>
-                            <span class="help-block" ng-if="formerror.address">{{formerror.address}}</span>
+                            <input class="form-control" id="NewAddress" placeholder="address, xxx" ng-model="formdata.address" ></input>
+                            <span class="help-block" ng-if="formerror.address != null">{{formerror.address}}</span>
                         </div>
                         <div class="form-group" ng-class="{'has-error': formerror.Phone}">
                             <label for="NewPhone"><h4>Phone</h4></label>
-                            <input class="form-control" id="NewPhone" ng-model="formdata.phone" required></input>
-                            <span class="help-block" ng-if="formerror.phone">{{formerror.phone}}</span>
+                            <input class="form-control" id="NewPhone" placeholder="(xx)xxxx-xxxx" ng-model="formdata.phone" ></input>
+                            <span class="help-block" ng-if="formerror.phone != null">{{formerror.phone}}</span>
                         </div>
                         <div class="form-group" ng-class="{'has-error': formerror.birthday}">
                             <label for="NewBirthday"><h4>Birthday</h4></label>
-                            <input class="form-control" id="NewBirthday" ng-model="formdata.birthday" placeholder="{{formdata.birthday}}" type="date" required></input>
-                            <span class="help-block" ng-if="formerror.birthday">{{formerror.birthday | date : "dd/MMM/yyyy"}}</span>
+                            <input name="date" class="form-control" id="NewBirthday" placeholder="dd/mm/yyyy" ng-model="formdata.birthday" type="date" ></input>
+                            <span class="help-block" ng-if="formerror.birthday != null">{{formerror.birthday | date : "dd/MMM/yyyy"}}</span>
+                            <span style="color:red" ng-show="contactForm.date.$invalid">
+                                <span ng-show="editContactForm.date.$error.date">Invalid date.</span>
+                            </span>
                         </div>
-                        <button type="submit" class="btn btn-default" ng-click="edit_contact()">Edit</button>
+                        <input type="submit" ng-disabled="
+                            editContactForm.name.$error.required || 
+                            editContactForm.email.$error.email || 
+                            editContactForm.date.$error.date"
+                            class="btn btn-default" ng-click="edit_contact()" value="Edit"></input>
                     </form>
                 </div>
             </div>

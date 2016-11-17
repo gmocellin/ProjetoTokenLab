@@ -45991,7 +45991,7 @@ var app = angular.module('projetoTokenLabApp', [
     'ngCookies'
 ]).config(['$httpProvider',function($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
-}]).run(['$rootScope', 'Account', '$location', 'Notification', function($rootScope, Account, $location, Notification){
+}]).run(['$rootScope', 'Account', '$location', 'Notification', function( $rootScope, Account, $location, Notification){
     Account.me().success(function(data){
         if (data.status == "success"){
             setLocalUser(data, $rootScope);
@@ -46073,7 +46073,6 @@ angular.module('projetoTokenLabApp')
         if($.trim($scope.formdata.username).length == 0){
             $scope.formerror.username = "You can't use only white spaces.";
         } else {
-            console.log($scope.formdata);
             Account.update_user($scope.formdata).success(function(data){
                 if (data.status == "success"){
                     Notification.success("User updated");
@@ -46159,7 +46158,6 @@ angular.module('projetoTokenLabApp')
             username : $scope.username,
             password : $scope.password
         };
-        console.log(formdata);
         Auth.login(formdata).success(function(data){
             if (data.user){
                 Notification.success("Login successfully!");
@@ -46220,7 +46218,6 @@ angular.module('projetoTokenLabApp')
     //$scope.searchText = "";
     var data = {}
     data.name = $routeParams.searchText;
-    console.log(data);
     
     Contact.search_contact(data).success(function(data){
         if(data.status=="success"){
@@ -46334,13 +46331,17 @@ angular.module("projetoTokenLabApp")
         },
         new_contact: function(data){
             var formdata = data;
-            data.formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            if(data.formdata.birthday != null){
+                data.formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            }
 
             return $http.post(urlpath("contact/new_contact"), data);
         },
         update_contact: function(data){
             var formdata = data;
-            formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            if(data.formdata.birthday != null){
+                formdata.birthday = data.formdata.birthday.toISOString().slice(0, 10);
+            }
 
             return $http.post(urlpath("contact/update_contact"), formdata);
         },
